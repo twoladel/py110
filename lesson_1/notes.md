@@ -110,3 +110,62 @@ TypeError: 'tuple' object does not support item assignment
 ## 4. Dictionaries, Sets and Frozen Sets
 
 ### Dictionaries
+- `{key: value}`
+- Ordered as of Python 3.7 
+- mutable
+- keys must be hashable objects
+    - `TypeError` raised if unhashable object used as key
+    - `int` and `str` are best options for keys
+    - `frozensets` and `ranges` next
+    - `tuple` if all elements hashable
+    - `float` **BEWARE** risky due to floating point precision issues
+- Referencing a key that doesn't exist will raise `KeyError`
+    - Avoid with `dict.get()` method -- will return `None` or specified return value if key not present
+- Check membership of dict keys with `in` and `not in` keywords
+- `del` statement to delete key: value pairs
+
+#### Hashing
+- object is hashable if it has a stable and *mostly* unique **hash value**
+- hash value is determined by the `hash` function 
+- relied on for quick data retrieval (dicts, sets)
+- hash collions happen if two keys have the same hash value, Python deals with it, but can cause efficiency issues
+
+### Sets
+- also use {} notation
+- unordered collection on unique elements (i.e. no duplicate values)
+- mutable
+    - elements must be immutable (hashable) this helps keep elements unique
+    - `TypeError` if you attempt to add a mutable element
+- `in` keyword to check for membership
+- `remove` method will raise a `KeyError` if element not in the set
+- `discard` method will not raise an error if element not in the set
+
+### Frozen Sets
+- `({})`
+- Same as sets but immutable (hashable)
+- membership tests `in` or `not in`
+
+### Operations on Dicts, Sets and Frozen Sets
+- membership testing: `in` and `not in`
+- determine length: `len`
+- iteration: never with indexes, for `dict` iterates over keys
+- `clear` method to remove all elements from `set` or `dict`
+    - not `frozenset` because they are immutable
+
+### Conversion to Dicts, Sets, and Frozen Sets
+- Converting to Dict:
+    - need pairs of data, like a list of tuples where each tuple is a pair
+    - can use `zip` to create pairs and then use the `dict` function
+    ```
+    >>> keys = ['a', 'b', 'c']
+    >>> values = [1, 2, 3]
+    >>> zipped_pairs = zip(keys, values)
+    >>> dict(zipped_pairs)
+    {'a': 1, 'b': 2, 'c': 3}
+    ```
+- Converting to Sets and Frozen Sets
+    - use the `set()` and `frozenset()` constructors
+    - converting to one of these will ensure only unique elements 
+    - can convert sets and frozensets to each other
+
+## 5. Working with Strings and Ranges
