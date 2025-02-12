@@ -163,9 +163,45 @@ TypeError: 'tuple' object does not support item assignment
     >>> dict(zipped_pairs)
     {'a': 1, 'b': 2, 'c': 3}
     ```
+    - can also use `enumerate` with `dict` to create a dict 
+    ```
+    >>> lst = ['a', 'b', 'c', 'd']
+    >>> my_dict = dict(enumerate(lst))
+    >>> print(my_dict)
+    {0: 'a', 1: 'b', 2: 'c', 3: 'd'}
+    ```
+
 - Converting to Sets and Frozen Sets
     - use the `set()` and `frozenset()` constructors
     - converting to one of these will ensure only unique elements 
     - can convert sets and frozensets to each other
 
 ## 5. Working with Strings and Ranges
+### Working with Ranges
+#### old range info
+- how to construct with start, stop, step
+- iteration is popular usage
+#### New Range info
+- `enumerate` function when you need index and element during iteration
+```
+colors = ['red', 'green', 'blue']
+for idx, color in enumerate(colors):
+    print(f'{color} is at position {idx}')
+
+red is at position 0
+green is at position 1
+blue is at position 2
+```
+- range attributes:
+    - `.start`, `.stop`, `.step`
+    - if you have a range object and don't know how it was constructed you can use the attributes to get info
+
+### Working with Strings
+
+#### `str.count` `str.index` `str.find`
+- pass substring as argument
+- `index` returns an error if value not found `ValueError`
+- `find` returns `-1` if value not found
+- all three take optional start and stop args (stop works like in ranges or slices)
+
+#### `str.replace`
