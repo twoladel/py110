@@ -205,3 +205,72 @@ blue is at position 2
 - all three take optional start and stop args (stop works like in ranges or slices)
 
 #### `str.replace`
+- args: (old, new, count)
+- replaces old arg with new arg (args must be substrings)
+- count arg is optional - if you leave blank will replace all instances
+- returns copy of string with new in place of old
+
+#### `str.upper` `str.lower` `str.casefold`
+- all three methods change case on entire string
+- `casefold` is internationlized (best practice)
+
+#### `str.capitalize` and `str.swapcase`
+- `capitalize` will upper the first character and lower the rest of the string
+- `swapcase` will swap the case of all cased characters in the string
+- `swapcase` is internationalized - potential unexpected behavior if doubling calls (see below)
+```
+>>> 'Straße'.swapcase()
+'sTRASSE'
+
+>>> 'Straße'.swapcase().swapcase()
+'Strasse'
+```
+
+#### `str.join` and `str.split`
+- `join` takes an iterable (all elements must be strings) and returns them as a string
+    - precede `.join` with a whitespace char `" "` or other chars to place between elements
+- `split` splits a string into a list of substrings
+    - takes two optional args
+    - no args will split at any sequences of whitespace
+    - delimiter arg to split at all occurences of delimiter
+    - second arg is amont of splits, if you don't want all splits
+    - string.split('') - can't split on empty string, just call `list` or `tuple`
+
+#### `str.strip` `lstrip` and `rstrip`
+- will remove whitespace from both sides or left only or right only
+- optionally pass it an argument string
+    - it will remove all occurences of any chars in that string until it meets a char not in string
+
+#### other methods
+- `startswith` and `endswtih`
+- `isalpha` `isalnum` `isspace` `isdigit`
+    - above, all chars must be to return `True`
+
+## 6. Working with Lists and Tuples
+
+### Working w/ Lists
+
+#### `list.count`
+#### `list.index`
+- optional stop and end arguments for `index`
+#### `list.append`
+#### `list.insert`
+- two arguments:
+    - first arg is index where the object will be inserted 
+    - the second argument is the object you're inserting into the list
+    - if first arg is > len(list), will simply append
+#### `list.extend`
+- extend a list with another iterable
+- appends list with entire iterable 
+- if adding from a set or frozenset, items might not be appended in expected order because sets are unordered
+
+#### `list.remove` and `list.pop`
+- `pop` mutates list and returns 'popped' element
+    - takes an index as arg (if no arg, removes and returns last element)
+    - `IndexError` if passed an out of range index argument
+- `remove` mutates list and returns `None`
+    - takes an object as an argument
+    - `ValueError` if object not present
+
+#### `list.reverse`
+
