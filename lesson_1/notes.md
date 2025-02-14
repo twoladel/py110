@@ -320,3 +320,32 @@ blue is at position 2
 - if you need your set (or frozenset) to be ordered
 - covert to a list or tuple depending on if you want immutability or not
 - may need to sort after converting (does the order matter to you?)
+
+## 7. Working with Dicts, Sets and Frozen Sets
+### Dicts
+- access values via keys
+- delete key-value pair with `del` statement
+- check for keys with `in` or `not in` before accessing to avoid errors
+- use `copy` method if you want a new copy of dict and not a new reference
+    - remember shallow copy so nested mutable objects are same and will update if mutated
+#### `get` and `setdefault` method
+- `get` will take a second argument which is a default value to return if key doesn't exist
+- `setdefault` takes a key and default value as arguments
+    - if key is **NOT** present, `setdefault` will add key and default value to the dict 
+        - *AND* return the value
+    - if key is present, `setdefault` will return the value
+    - `setdefault` is helpful for initializing dicts. example below
+    ```
+    word = "hello"
+    letter_counts = {}
+    for letter in word:
+        letter_counts.setdefault(letter, 0)
+        letter_counts[letter] += 1
+
+    print(letter_counts)
+    ```
+#### `pop` and `popitem`
+- `pop` will remove the key-value pair and return the value
+    - if the key doesn't exist, `KeyError`
+    - to avoid error, add a default value as the second arg
+- `popitem` will remove the key-value pair and returns the pair as a tuple
