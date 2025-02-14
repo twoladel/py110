@@ -273,4 +273,50 @@ blue is at position 2
     - `ValueError` if object not present
 
 #### `list.reverse`
+- returns `None` and reverses the list in place
 
+#### `list.sort`
+- returns `None` and sorts the list in place
+- key argument creates opitons 
+- pass `sort` any function or method that takes one argument and returns a value
+- if sorting incompatible types, will raise `TypeError`
+- reverse the sort with `reverse=True` keyword argument
+- can use a `key` function to ensure all elements are of same type
+    - ex. ensuring any `ints` are converted to `str` or that all collections are `list`
+
+### Working w/ Tuples
+
+#### Tuple Unpacking
+```
+>>> shades = ('crimson', 'emerald', 'azure')
+>>> r, g, b = shades
+>>> r
+'crimson'
+
+>>> g
+'emerald'
+
+>>> b
+'azure'
+```
+- above example shows that tuples can be unpacked into variables
+- also used with enumerate function and for loops
+- remember tuple of one needs a trailing comma `('tuple',)`
+- `index` and `count` are most common methods for tuples
+
+### Converting Dicts to lists and tuples
+- wrap the dict method calls in `list()` or `tuple()`
+- example below:
+```
+>>> data = {'apple': 5, 'banana': 3, 'cherry': 8}
+>>> list(data.values())
+[5, 3, 8]
+
+>>> tuple(data.values())
+(5, 3, 8)
+```
+
+### Converting Sets and Frozen Sets to lists and tuples
+- if you need your set (or frozenset) to be ordered
+- covert to a list or tuple depending on if you want immutability or not
+- may need to sort after converting (does the order matter to you?)
