@@ -431,3 +431,37 @@ blue is at position 2
 - Useful if we want 'sets' as dictionary keys since sets themsevles aren't hashable
 
 ## 8. Unpacking Iterables in Python
+### The Unary Operator `*`
+- the `*` operator is used to unpack iterables
+- it should be placed before the iterable to unpack: `*lst`
+- if you want to combine iterables of different types:
+    - `merged_list = [*lst, *tup1, *set, *tup2]` 
+    - the above syntax would create a new list combining all elements from those iterables
+    - you can also merge as a tuple or a set
+- if you want to pass the elements of an iterable as separate args
+    ```
+    def test(num1, num2, num3):
+    # do something
+
+    numbers = [1, 2, 3]
+    test(*numbers)
+    ```
+    - amount of elements in iterable must match amount of args in definition
+
+### Unpack an iterable into variables - variable assignment
+```
+numbers = [1, 2, 3]
+a, b, c = numbers
+print(a, b, c)  # Outputs: 1 2 3
+```
+- this does not require the Unary operator `*`
+- amount of elements in the iterable must match amount of variables being assigned
+    - will raise `ValueError` if they don't match
+- supports nested unpacking too
+```
+numbers = [1, [2, 3, 4], 5]
+a, (b, c, d), e = numbers
+print(a, b, c, d, e)  # Outputs: 1 2 3 4 5
+```
+
+### The Unary `**` Operator for Dictionaries 
