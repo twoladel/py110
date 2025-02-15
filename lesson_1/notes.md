@@ -353,7 +353,7 @@ blue is at position 2
     - `popitem` takes *no arguments* and removes last key-value pair 
     - will return `KeyError` if dict is empty
 
-#### Mergering Dictionaries: `update`, `|`, `|=`
+#### Merging Dictionaries: `update`, `|`, `|=`
 - `update` method will add the argument dict to the dict you call the method on.
     - if keys overlap, value from arg dict will overwrite
     - `dict.update(new_dict)`
@@ -465,3 +465,31 @@ print(a, b, c, d, e)  # Outputs: 1 2 3 4 5
 ```
 
 ### The Unary `**` Operator for Dictionaries 
+- can be used to unpack dicts
+- example: to merge to dicts together
+```
+>>> dict1 = {'a': 1, 'b': 2}
+>>> dict2 = {'b': 3, 'd': 4}
+>>> merged_dict = {**dict1, **dict2}
+>>> merged_dict
+{'a': 1, 'b': 3, 'd': 4}
+```
+
+- Also `**` can be used to collect or pack items into a dict
+- example below with keyword arguments (`kwargs`) into a function:
+```
+def profile(**kwargs):
+    for key, value in kwargs.items():
+        print(f"{key}: {value}")
+
+profile(name="Srdjan",
+        age=38,
+        profession="software engineer")
+
+# Output:
+# name: Srdjan
+# age: 38
+# profession: software engineer
+```
+
+## 9. Intro to the PEDAC process
