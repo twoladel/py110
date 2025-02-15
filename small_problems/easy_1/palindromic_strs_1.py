@@ -5,7 +5,6 @@ def is_palindrome(str1):
     return str1 == str1[::-1]
 
 # All of these examples should print True
-
 print(is_palindrome('madam') == True)
 print(is_palindrome('356653') == True)
 print(is_palindrome('356635') == False)
