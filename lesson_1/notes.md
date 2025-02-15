@@ -346,6 +346,88 @@ blue is at position 2
     ```
 #### `pop` and `popitem`
 - `pop` will remove the key-value pair and return the value
+    - `pop` *requires* a key as the argument
     - if the key doesn't exist, `KeyError`
-    - to avoid error, add a default value as the second arg
+    - to avoid error, add a default value as the second arg to be returned if no key
 - `popitem` will remove the key-value pair and returns the pair as a tuple
+    - `popitem` takes *no arguments* and removes last key-value pair 
+    - will return `KeyError` if dict is empty
+
+#### Mergering Dictionaries: `update`, `|`, `|=`
+- `update` method will add the argument dict to the dict you call the method on.
+    - if keys overlap, value from arg dict will overwrite
+    - `dict.update(new_dict)`
+- `|` is the merge operator
+    - will not mutate either dict, will merge like `update` but create a *new dict object*
+    - `merged_dict = dict | new_dict`
+- `|=` is the update operator
+    - will do exactly what update method does
+    - `dict |= new_dict`
+
+#### Converting to Dicts
+- ***Requires iterable being converted to have key-value pairs***
+
+### Sets
+- Check if values exist with `in` and `not in`
+#### Checking for subsets and supersets
+- `issubset`, `<=`, `<`
+- `issuperset`, `>=`, `>`
+- the methods and operators containing `=` will return `True` if equal
+- `<` and `>` only return `True` if left side is sub or super of right but **NOT EQUAL**
+
+#### Set operations
+- `union` method and `|` operator
+    - will return a new set by combining two sets - **No mutation**
+    - `set1 |= set2` reassignment syntax will mutate `set1`. `|=` is the `update` operator
+- `intersection` method and `&` operator
+    - checks for common elements between sets and returns them as a new set object
+    - No mutation
+- `difference` method and `-` operator
+    - checks for differences between the sets
+    - returns values (as a new set) from left side operand (or calling set) that are not in right side operand
+    - No mutation
+
+#### Checking disjoint sets `isdisjoint`
+- disjoint means that there are no overlapping elements between sets
+- returns a boolean
+
+#### Copying a set `copy`
+- copy method can be used to create a new set object with same elements
+- `=` assignment will create a new reference to same set object
+
+#### Adding and remvoing set members: `add`, `remove`, `discard`, `pop` and `clear`
+- `add` method: adds passed argument to set and returns `None`
+    - No error if element is already a member
+- `remove` method: removes passed argument from set and returns `None`
+    - `KeyError` if element is not a member
+- `discard`: same as remove but won't raise an exception if argument is not a member
+- `pop` removes a random element from the set and returns it
+    - `pop` takes no arguments
+    - Use if you want to empty a set one element at a time 
+    ```
+    fruits1 = {"apple", "banana", "cherry"}
+
+    while fruits1:
+    print(fruits1.pop())
+    ```
+    - will raise a `KeyError` if you call `pop` on an empty set
+- `clear` removes all elements from the set and returns `None`
+
+#### Set methods vs operators
+***For all methods that have an operator counterpart***
+- you can pass any iterable to the methods
+    - Non-mutating: `union`, `intersection`, `difference`, `symmetric_difference`, `issubset` and `issuperset`
+    - Mutating: `update`, `intersection_update`, `difference_update`, `symmetric_difference_update`
+- operators need both operands to be `set` or `frozenset`
+- whether using method or operator, you can have several arguments or operands
+    `set1.union(set2, set3)` or `set1 | set2 | set3`
+#### Converting to a set
+- convert other collections to sets with `set()` 
+    - remember that it won't maintain order
+
+### Working with Frozen Sets
+- can use set methods like `union` to create new frozensets
+- can't use mutating methods like `pop`
+- Useful if we want 'sets' as dictionary keys since sets themsevles aren't hashable
+
+## 8. Unpacking Iterables in Python
