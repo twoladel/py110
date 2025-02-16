@@ -1,5 +1,14 @@
 # Lesson 1 Assignments
 
+- [Intro to collections in Python](#2-intro-to-collections-in-python)
+- [Sequences](#3-sequences)
+- [Dicts Sets and Frozen Sets](#4-dicts-sets-and-frozen-sets)
+- [Working with Strings and Ranges](#5-working-with-strings-and-ranges)
+- [Working with Lists and Tuples](#6-working-with-lists-and-tuples)
+- [Working with Dicts, Sets, and Frozen Sets](#7-working-with-dicts-sets-and-frozen-sets)
+- [Unpacking Iterables in Python](#8-unpacking-iterables-in-python)
+- [Intro to the PEDAC process](#9-intro-to-the-pedac-process)
+
 ## 2. Intro to collections in Python
 ### sequences
 Sequences are ordered collections. In a sequence each element has a definite position,
@@ -107,7 +116,7 @@ TypeError: 'tuple' object does not support item assignment
 - Ranges: construct ranges you need 
     - don't bother trying to convert another collection to a range
 
-## 4. Dictionaries, Sets and Frozen Sets
+## 4. Dicts Sets and Frozen Sets
 
 ### Dictionaries
 - `{key: value}`
@@ -493,3 +502,39 @@ profile(name="Srdjan",
 ```
 
 ## 9. Intro to the PEDAC process
+- P - Understand the ***P***roblem
+- E - ***E***xamples and Test cases
+- D - ***D***ata Structure
+- A - ***A***lgorithm
+- C - ***C***ode
+
+### - P: Understand the Problem
+1. Read the problem description
+    - determine inputs and outputs
+        - **Outputs**: always verify if you are returning the *same object* or a *new object*
+    - note any explicit requirements
+2. Check the test cases
+    - these give info about implicit requirements not mentioned in the problem description
+    - some implicit requirements may not be answered by the test cases, so ***ASK***
+3. If any part of the problem is unclear, ask the interviewer for clarification
+
+
+4. To conclude this step (P), write down: 
+    - input
+    - output (same object or new object?)
+    - rules
+        - explicit requirements
+        - implicit requirements
+
+### - E: Examples and Test Cases
+- not covered here because interviewer will provide. Covered in a later course
+
+### - D & A: Data Structure and Algorithm
+- after working through Understanding the Problem, determine the data structure needed
+- then build the algorithm
+- See pedac_palindrome.py file for first practice at creating algorithm
+    - write high level abstraction
+        - example could be naming functions that you'll later need to make an algorithm for
+    - then write informal pseudocode for the "hard" parts
+    - finally write code from pseudocode
+    - breakdown each piece into smaller chunks to solve then move on
