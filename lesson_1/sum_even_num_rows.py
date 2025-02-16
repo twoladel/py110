@@ -114,4 +114,5 @@ def build_row(start_num, length):
 # Test cases:
 print(sum_rows(2) == 10) # True
 print(sum_rows(4) == 68) # True
-print(sum_rows(3) == 30)
+print(sum_rows(3) == 30) # True
+print(sum_rows(1) == 2) # True
