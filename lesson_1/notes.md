@@ -8,6 +8,7 @@
 - [Working with Dicts, Sets, and Frozen Sets](#7-working-with-dicts-sets-and-frozen-sets)
 - [Unpacking Iterables in Python](#8-unpacking-iterables-in-python)
 - [Intro to the PEDAC process](#9-intro-to-the-pedac-process)
+- [PEDAC problem solving process](#10-the-pedac-problem-solving-process)
 
 ## 2. Intro to collections in Python
 ### sequences
@@ -538,3 +539,42 @@ profile(name="Srdjan",
     - then write informal pseudocode for the "hard" parts
     - finally write code from pseudocode
     - breakdown each piece into smaller chunks to solve then move on
+
+## 10. The PEDAC problem solving process 
+- Notes on the videos below
+- Following along with solving problem in video with PEDAC in .py file
+    - sum_even_num_rows.py
+
+### Video 1: P - Understanding the Problem
+- Establish the rules and boundaries of the problem
+- Restate the problem in our own words
+- Note rules:
+    - Explicit requirements
+    - Implicit requirements
+- Determine the input and output
+- Ask questions / indentify unclear info
+- Don't Rush!! Spend time here ensuring you **UNDERSTAND**
+
+### Video 2: E - Examples and Test Cases
+- Can be used to confirm or refute assumptions about the problem
+- Answer questions and clarify implicit requirements
+- Test cases are written in code to be run to test your solution
+- Codify rules and boundaries of the problem
+
+### Video 3: D - Data structure
+- Thinking in terms of data structures is important part of problem solving
+- Data structures help us think logically about the solution
+    - reason with data logically
+    - helps interact with data at the implementation stage
+- Data structures are closely linked to the algorithm in the next step
+
+### Video 4: A - Algorithm
+- A logical sequence of steps to solve a problem (complete a task)
+- Closely related to data structure
+- At first keep it high level abstraction, avoid thinking about code implementation
+- Then you can begin to get granular on each step
+- Break down steps and add detail as needed
+- Don't worry about efficiency at this stage
+- Use PEDAC for a step in your high level algorithm if complex
+
+### Videos Implementing code parts 1-6
