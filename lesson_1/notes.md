@@ -9,6 +9,7 @@
 - [Unpacking Iterables in Python](#8-unpacking-iterables-in-python)
 - [Intro to the PEDAC process](#9-intro-to-the-pedac-process)
 - [PEDAC problem solving process](#10-the-pedac-problem-solving-process)
+- [PEDAC Guided Practice: Leftover Blocks](#11-pedac-guided-practice-leftover-blocks)
 
 ## 2. Intro to collections in Python
 ### sequences
@@ -594,3 +595,62 @@ profile(name="Srdjan",
 - Switch between implementation and abstract problem solving
 - Don't try to problem solve at the code level
 - Practice, practice, evolve, practice, evolve.
+
+## 11. PEDAC Guided practice: Leftover Blocks
+Notes here for this assignment and the steps of PEDAC
+leftover_blocks.py for my code implementation
+
+### 1. Understand the Problem:
+- Tasks
+    - Mental model of the problem
+    - Input(s)
+    - Output(s)
+    - Explict and implicit requirements
+    - Clarifying questions 
+
+- Restate: After given a number of blocks. Determine the tallest building we can make with those blocks. Calculate the number of leftover blocks.
+- Input: integer that represents the number of blocks we have to build with
+- Output: new integer representing the number of blocks we have leftover
+- Explicit requirements:
+    - each block is a cube: six equal sided box
+    - the structure we are building is in layers
+    - the top layer is a single block
+    - a block in an upper layer must be supported by four blocks in lower layer
+    - a block in a lower layer can support more than one block above
+    - No gaps between blocks
+- Implicit requirements:
+    - a valid structure is a minimum of 1 layer
+    - input of 0 should return 0
+    - each layer's block count is the square of the layer number (top to bottom):
+        - e.g. layer 2 would have four blocks because 2 squared is 4 and then layer 1 would be 1
+    - build one layer at a time, incrementing and squaring
+- Questions: (updated requirements above after answering questions from test cases)
+    - Can we have a structure of a single layer? - Yes
+    - What should the output be if we get a 0 input? - 0
+    - LS: Can a lower layer be valid if it has more blocks than it needs? - No
+
+### 2. Examples and Test Cases
+- The provided examples (copied into the leftoverblocks.py file) answered my questions from step 1
+
+### 3. Data Structure
+- working with squares and square roots
+- ints and mathematical operators
+- perhaps a dict or nested list to represent layers and total block count for that amount of layers?
+
+### 4. Algorithm
+- note from first step: build one layer at a time, incrementing and squaring
+- Given total block count
+- 1. Build a layer
+    - start at layer 1 // *update*: start at layer 0
+    - ***Did not have this step initially***: set remaining blocks to input
+    - ***Nor this step***: increment layer by 1
+    - ***Needed to move this step into step 3*** subtract that amount of blocks from total block count
+        - ***and this step*** updating total block count  
+- 2. Calculate size of next valid layer: increment layer by 1 and square the layer number
+- 3. Check if enough blocks for next layer: is total block count >= amount needed for next layer
+    - if yes, repeat steps 1 & 2
+    - else: return remaining blocks
+
+- My step 1 kept tripping me up. Made notes above of how I adjusted based on LS's solution.
+- When I tried to implement off of LS's algorithm, it when smoothly
+
