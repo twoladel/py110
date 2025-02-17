@@ -578,3 +578,17 @@ profile(name="Srdjan",
 - Use PEDAC for a step in your high level algorithm if complex
 
 ### Videos Implementing code parts 1-6
+- Translate your algorithm into working code
+    - Think about algorithm in context of the programming language
+        - Features and boundaries
+        - Rules of data structures
+        - Built-in methods and functions
+        - Syntax / general patterns
+    - Create test cases if not provided
+- Code with intent
+
+### Final thoughts on PEDAC
+- Not a linear process
+- Move back and forth between the steps
+- Refer back to notes 
+- Switch between implementation and abstract problem solving
