@@ -592,3 +592,5 @@ profile(name="Srdjan",
 - Move back and forth between the steps
 - Refer back to notes 
 - Switch between implementation and abstract problem solving
+- Don't try to problem solve at the code level
+- Practice, practice, evolve, practice, evolve.
