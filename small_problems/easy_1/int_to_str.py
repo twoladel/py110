@@ -12,17 +12,13 @@ def integer_to_string(number):
         9: '9'
     }
 
-    if not number:
-        return '0'
-    
     string_number = ''
     while number:
-        quotient, remainder = divmod(number, 10)
-        number = quotient
+        number, remainder = divmod(number, 10)
         string_integer = DIGITS[remainder]
         string_number += string_integer
 
-    return string_number[::-1]
+    return string_number[::-1] or '0'
 
 print(integer_to_string(4321) == "4321")              # True
 print(integer_to_string(0) == "0")                    # True
