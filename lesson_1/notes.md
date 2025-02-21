@@ -10,6 +10,7 @@
 - [Intro to the PEDAC process](#9-intro-to-the-pedac-process)
 - [PEDAC problem solving process](#10-the-pedac-problem-solving-process)
 - [PEDAC Guided Practice: Leftover Blocks](#11-pedac-guided-practice-leftover-blocks)
+- [PEDAC Guided Practice: Most Adjacent Consonants](#12-pedac-practice-sort-by-most-adjacent-consonants)
 
 ## 2. Intro to collections in Python
 ### sequences
@@ -653,4 +654,11 @@ leftover_blocks.py for my code implementation
 
 - My step 1 kept tripping me up. Made notes above of how I adjusted based on LS's solution.
 - When I tried to implement off of LS's algorithm, it when smoothly
+
+## 12. PEDAC practice Sort by Most Adjacent Consonants
+- did this problem before. 
+- removed PEDAC notes
+
+
+
 
