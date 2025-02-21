@@ -44,6 +44,9 @@ def ensure_two_digits(num):
 def dms(number):
     DEGREE = "\u00B0"
 
+    if number < 0 or number > 360:
+        number = sanitize_number(number)
+
     degrees, remainder = divmod(number, 1)
     minutes = remainder * 60
     seconds = (minutes % 1) * 60
@@ -60,3 +63,37 @@ print(dms(254.6) == "254°35'59\"")
 print(dms(93.034773) == "93°02'05\"")
 print(dms(0) == "0°00'00\"")
 print(dms(360) == "360°00'00\"" or dms(360) == "0°00'00\"")
+
+'''Refactored for Further Exploration piece.
+P-
+input: any negative or positive number
+output: same as above
+
+A-
+additional math steps
+if outside the range of 0 - 360
+helper function:
+    if < 0
+        get quotient of input divided by -360
+        add input to 360 * quotient
+        Now we have a negative number between -360 and 0
+        subtract that number from 360
+        return number
+    if > 360
+        get quotient of input divided by 360
+        subtract 360 * quotient from input
+        return number
+'''
+def sanitize_number(number):
+    if number < 0:
+        quotient = number // -360
+        number += (360 * quotient) + 360
+        return number
+    if number > 360:
+        quotient = number // 360
+        return number - (360 * quotient)
+    
+print(dms(-1))   # 359°00'00"
+print(dms(400))  # 40°00'00"
+print(dms(-40))  # 320°00'00"
+print(dms(-420)) # 300°00'00"
