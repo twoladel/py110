@@ -20,13 +20,13 @@ While lists are NOT empty
     then do same for list2
 return new list
 '''
-def interleave(lst1, lst2): # This version empties (mutates) the original lists
-    new_list = []
+# def interleave(lst1, lst2): # This version empties (mutates) the original lists
+#     new_list = []
 
-    while lst2:
-        new_list.append(lst1.pop(0))
-        new_list.append(lst2.pop(0))
-    return new_list
+#     while lst2:
+#         new_list.append(lst1.pop(0))
+#         new_list.append(lst2.pop(0))
+#     return new_list
 
 # def interleave(lst1, lst2): # This version retains the original lists.
 #     new_list = []
@@ -35,6 +35,10 @@ def interleave(lst1, lst2): # This version empties (mutates) the original lists
 #         new_list.append(lst1[i])
 #         new_list.append(lst2[i])
 #     return new_list
+
+# Zip function solution
+def interleave(lst1, lst2):
+    return [el for tup in zip(lst1, lst2) for el in tup]
 
 list1 = [1, 2, 3]
 list2 = ['a', 'b', 'c']
