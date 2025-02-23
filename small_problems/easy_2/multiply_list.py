@@ -23,6 +23,10 @@ return new list
 def multiply_list(lst1, lst2):
     return [tup[0] * tup[1] for tup in zip(lst1, lst2)]
 
+# Alternate solution:
+# def multiply_list(lst1, lst2):
+#     return [a * b for a, b in zip(lst1, lst2)]
+
 list1 = [3, 5, 7]
 list2 = [9, 10, 11]
 print(multiply_list(list1, list2) == [27, 50, 77])  # True
