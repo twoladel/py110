@@ -11,6 +11,7 @@
 - [PEDAC problem solving process](#10-the-pedac-problem-solving-process)
 - [PEDAC Guided Practice: Leftover Blocks](#11-pedac-guided-practice-leftover-blocks)
 - [PEDAC Guided Practice: Most Adjacent Consonants](#12-pedac-practice-sort-by-most-adjacent-consonants)
+- [Selection and Transformation](#13-selection-and-transformation)
 
 ## 2. Intro to collections in Python
 ### sequences
@@ -207,6 +208,9 @@ blue is at position 2
 - range attributes:
     - `.start`, `.stop`, `.step`
     - if you have a range object and don't know how it was constructed you can use the attributes to get info
+    ```
+    start = range.start # No () when using range attributes
+    ```
 
 ### Working with Strings
 
@@ -361,7 +365,7 @@ blue is at position 2
     - `pop` *requires* a key as the argument
     - if the key doesn't exist, `KeyError`
     - to avoid error, add a default value as the second arg to be returned if no key
-- `popitem` will remove the key-value pair and returns the pair as a tuple
+- `popitem` will remove the key-value pair and returns the pair as a **tuple**
     - `popitem` takes *no arguments* and removes last key-value pair 
     - will return `KeyError` if dict is empty
 
@@ -659,6 +663,50 @@ leftover_blocks.py for my code implementation
 - did this problem before. 
 - removed PEDAC notes
 
+## 13. Selection and Transformation
+- Selection: choosing items from an iterable depending on one or more criteria
+- Transformation: modifying each element of a collection based on criteria
+- both use basics of looping:
+    - a loop
+    - a counter
+    - a way to retrieve the current value
+    - a way to exit the loop
 
+### Using loops to select and transform
+- selection criteria will be in form of conditional
+     - ex. `if num % 2 == 1` is a selection criterion
+     - this example selects odd numbers
+- transformation criteria will be a line performing an operation
+    - ex. `num * multiplier` is a transformation criterion
+        - mulitplying the number by the multiplier to change it
 
+- When performing a transformation, it's always important to pay attention to whether the original collection is mutated or if a new collection is returned.
 
+### Extracting to Functions
+- when doing selections or transformations on collections, extracting to a function is good practice
+- if your combining selection and transformation: 
+    - and none of the elements of a collection fit the criteria for selection
+    - a transformation still happended even though elements did not transform
+    - This is an identity transformation
+
+### More flexible functions
+- as we're writing functions to select or transform collection elements
+    - we can make the functions more generic to be more flexible
+    - example:
+    ```
+    def multiply(numbers, multiplier):
+    multiplied_nums = []
+
+    for current_num in numbers:
+        multiplied_nums.append(current_num * multiplier)
+
+    return multiplied_nums
+
+    my_numbers = [1, 4, 3, 7, 2, 6]
+    print(multiply(my_numbers, 3))  # [3, 12, 9, 21, 6, 18]
+    ```
+    - in the above example, we can now use this function to multiply any list of numbers by any number
+### Summary
+- always be thinking about return values
+- are we returning new collection objects or mutating?
+- additional function parameters add flexibility to select and transform functions
