@@ -39,7 +39,7 @@ def pad_zeros(num):
 
 def time_of_day(num):
     time_in_minutes = num % 1440  # Works in Python, but not reliable across languages
-
+    # TODO: Change implementation above due to unreliability of modulo with negative numbers
     hour, minutes = divmod(time_in_minutes, 60)
 
     hour = pad_zeros(hour)
