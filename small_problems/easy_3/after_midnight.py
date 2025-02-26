@@ -38,8 +38,8 @@ def pad_zeros(num):
 
 
 def time_of_day(num):
-    time_in_minutes = num % 1440
-    print(time_in_minutes)
+    time_in_minutes = num % 1440  # Works in Python, but not reliable across languages
+
     hour, minutes = divmod(time_in_minutes, 60)
 
     hour = pad_zeros(hour)
