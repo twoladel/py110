@@ -143,3 +143,8 @@ lst = [a, b]
 print(lst)          # [[1, 3], [2]]
 ```
 - It is explained that the variable `lst` is assigned to a list object containing references to the list objects referenced by `a` and `b` . My question is specfically about the variables as pointer diagram. Is it technically true that the variable `a` is pointing to the address in memory of the list object it references and thus the same with variable `b` , meaning that the variable `lst`  points to the address of its list object but contained at that location in memory are the addresses of the two nested list objects referenced by variables `a` and `b`?
+
+- So you could update the list referenced by variable `a` in two ways now:
+    - `a[0] = 2` **OR** `lst[0][0] = 2`
+
+### Shallow Copying
