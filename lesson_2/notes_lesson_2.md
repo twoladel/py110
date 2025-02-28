@@ -147,4 +147,16 @@ print(lst)          # [[1, 3], [2]]
 - So you could update the list referenced by variable `a` in two ways now:
     - `a[0] = 2` **OR** `lst[0][0] = 2`
 
-### Shallow Copying
+### Shallow Copying (Lists and Dicts)
+- Sometimes you need to change a collection but need to retain the original collection
+- Copying! 
+- Shallow copies are completely new objects but when they have nested collections, those are not new objects
+    - said another way: Only the top level list is copied
+    - So a shallow copy shares the nested collection with the original
+    - If you modiy that nested collection, it will update in both the shallow copy and original object
+        - Assuming it is a list, dict or set which are mutable.
+- Multiple ways to create a shallow copy
+    - use `list` and `dict`constructors
+    - list slicing `lst2 = lst[:]`
+    - `copy` method -> `lst2 = lst.copy()`  *dict also has a copy method*
+    - import the copy module
