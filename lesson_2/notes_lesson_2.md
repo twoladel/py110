@@ -148,7 +148,7 @@ print(lst)          # [[1, 3], [2]]
     - `a[0] = 2` **OR** `lst[0][0] = 2`
 
 ### Shallow Copying (Lists and Dicts)
-- Sometimes you need to change a collection but need to retain the original collection
+- Sometimes you need to *mutate* a collection but need to retain the original collection
 - Copying! 
 - Shallow copies are completely new objects but when they have nested collections, those are not new objects
     - said another way: Only the top level list is copied
@@ -156,7 +156,24 @@ print(lst)          # [[1, 3], [2]]
     - If you modiy that nested collection, it will update in both the shallow copy and original object
         - Assuming it is a list, dict or set which are mutable.
 - Multiple ways to create a shallow copy
-    - use `list` and `dict`constructors
+    - use `list` constructor
     - list slicing `lst2 = lst[:]`
     - `copy` method -> `lst2 = lst.copy()`  *dict also has a copy method*
     - import the copy module
+        - works with all iterable collections
+
+#### Shallow copying of dicts
+- similar to lists
+- use `dict()`, `copy()` method, or `copy` module
+- same shallow copy rules
+
+#### Which copying technique to use?
+- `.copy()` method is preferred generally
+- if working with varied collection types, import the copy module
+- `[:]` slicing syntax is ***VERY*** Pythonic, so be on the lookout for it. 
+
+### Deep Copy
+- Deep copies create new objects for all nested collections no matter how deeply nested.
+- `import copy` and use `copy.deepcopy()` is only way to make a deep copy.
+- lost of processing power, only use when absolutely necessary
+- also works on other collections since it is the copy module.
