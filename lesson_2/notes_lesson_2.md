@@ -1,6 +1,10 @@
 # Lesson 2 Assignments
 
 - [Sorting](#2-sorting)
+- [Sorting Practice Problems](#3-sorting-practice-problems)
+- [Nested Data Structures](#4-nested-data-structures)
+- [Nested Data Struct Practice Problems](#5-nested-data-structure-practice-problems)
+- [Comprehensions](#6-comprehensions)
 
 ## 2. Sorting
 
@@ -177,3 +181,12 @@ print(lst)          # [[1, 3], [2]]
 - `import copy` and use `copy.deepcopy()` is only way to make a deep copy.
 - lost of processing power, only use when absolutely necessary
 - also works on other collections since it is the copy module.
+
+## 5. Nested Data Structure practice problems
+- practice problem solutions in a .py file in this lesson folder
+
+## 6. Comprehensions
+- Basic structure:
+```
+[output_expression for item in existing_list if condition]
+```
