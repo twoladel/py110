@@ -5,6 +5,7 @@
 - [Nested Data Structures](#4-nested-data-structures)
 - [Nested Data Struct Practice Problems](#5-nested-data-structure-practice-problems)
 - [Comprehensions](#6-comprehensions)
+- [Comprehension practice problems](#7-comprehension-practice-problems)
 
 ## 2. Sorting
 
@@ -14,6 +15,10 @@
     - `sorted()` returns a new list and leaves the old list alone (non-destructive)
     - `.sort()` method sorts the list in place, mutating the orignal list object
 - Can't sort a string in place as it is immutable, but you can call `sorted()` and then use `join`
+- Dicts:
+    - no direct way to sort a dictionary
+    - sort list of keys or values and then process dict in desired order
+        - comprehensions could be useful for this
 
 ### Sorting lists of strings
 - alphabetic first
@@ -186,7 +191,53 @@ print(lst)          # [[1, 3], [2]]
 - practice problem solutions in a .py file in this lesson folder
 
 ## 6. Comprehensions
-- Basic structure:
+- Concise way to make lists, dicts and sets
+
+- Basic structure (list comprehension):
+    ```
+    [output_expression for item in existing_list if condition]
+    ```
+- Selections and Transformations
+- identity transformation is when you're taking the elements from the list without changing them.
+- Transformations happen at the output_expression piece of the comprehension structure
+- Selection happends when there is an `if condition`
+    - also known as filtering
+
+- Set comprehensions are the same as list comprehensions except
+    - they use curly braces `{}`
+    - they won't store duplicate values, so your resulting set could have less elements than the original collection
+- Dict comprehensions are also similar to list comprehension but:
+    - the output_expression is `key_expression: value_expression` 
+        ```
+        {key_expression: value_expression for item in existing_list
+                                  if condition}
+        ```
+
+### Nested Comprehensions
 ```
-[output_expression for item in existing_list if condition]
+[output_expression for sublist in outer_list
+                   if condition1
+                   for item in sublist
+                   if condition2]
 ```
+- output_expression is the transformation
+    - in this example it could just be the item from the sublist or we could be modifying the item
+- sublist in out_list is each nested collection within the outer collection
+- conditional blocks in between are selection criteria if you need to filter
+- as many `for` and `if` blocks as you need/want
+
+### Using comprehensions with other collections
+- You can run a list, set, or dict comprehension on any iterable
+    - view objects, ranges, files, etc. 
+
+#### Times we don't want to use a comprehension
+- Don't use a comprehension unless you're using the return value
+- Don't use a comprehension for simple identity transformation
+    - use the collection constructor, `list()` or `set()` for example
+- If they get too complex, nested loops are more readable.
+
+## 7. Comprehension practice problems
+- See practice problems 6 & 7 of assignment 7 for comprehensions within comprehensions
+    - better to use helper functions, and use helper functions as output expression
+    - see same problems for this technique.
+- practice problems in comprehension_practice_problems.py
