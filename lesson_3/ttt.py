@@ -14,6 +14,7 @@ WIN_CONDITIONS = [
     {3, 6, 9},
     {3, 5, 7}
 ]
+MATCH_WIN = 5
 
 def initialize_board():
     return {num: ' ' for num in range(1, 10)}
@@ -21,7 +22,7 @@ def initialize_board():
 
 def display_board(board):
     os.system('clear')
-
+    print(f'You are {PLAYER_MARK}. The Computer is {COMPUTER_MARK}.')
     print('')
     print('     |     |')
     print(f'  {board[1]}  |  {board[2]}  |  {board[3]}')
@@ -49,9 +50,8 @@ def join_or(lst, delimiter=', ', joining_word='or'):
     if len(lst) == 2:
         return f'{lst[0]} {joining_word} {lst[1]}'
     elif len(lst) > 2:
-        last_num = lst.pop()
-        choices = delimiter.join(lst)
-        return f'{choices}{delimiter}{joining_word} {last_num}'
+        choices = delimiter.join(lst[0:-1])
+        return f'{choices}{delimiter}{joining_word} {lst[-1]}'
     
     choices = delimiter.join(lst)
     return f'{choices}'
@@ -89,36 +89,70 @@ def check_for_winner(board):
     
     for condition in WIN_CONDITIONS:
         if player_state >= condition:
-            return 'User wins!'
+            return 'You'
         elif computer_state >= condition:
-            return 'Computer wins!'
+            return 'Computer'
 
+def update_score(score, winner):
+    score[winner] += 1
+
+
+def display_score(score):
+    prompt("Scoreboard")
+    for key, value in score.items():
+        print(f'{key}: {value}')
+
+
+def detect_match_winner(score):
+    for player, wins in score.items():
+        if wins == MATCH_WIN:
+            return player
+        return None
+    
+def keep_playing(message):
+    prompt(f'{message}? y or n')
+    answer = input()
+    if answer[0] in {'y', 'Y'}:
+        return True
+    return False
 
 def play_tic_tac_toe():
     while True:
-        board = initialize_board()
+        score = {'You': 0, 'Computer': 0}
 
         while True:
+            board = initialize_board()
+
+            while True:
+                display_board(board)
+
+                player_choice(board)
+                if check_for_winner(board) or not empty_squares(board):
+                    break
+
+                computer_choice(board)
+                if check_for_winner(board) or not empty_squares(board):
+                    break
+            
             display_board(board)
 
-            player_choice(board)
-            if check_for_winner(board) or not empty_squares(board):
+            if check_for_winner(board):
+                winner = check_for_winner(board)
+                prompt(f'{winner} won!')
+                update_score(score, winner)
+                display_score(score)
+            else:
+                prompt("It's a draw!")
+                display_score(score)
+
+            if detect_match_winner(score):
+                prompt(f'{detect_match_winner(score)} won the match!')
                 break
 
-            computer_choice(board)
-            if check_for_winner(board) or not empty_squares(board):
+            if not keep_playing('Continue playing'):
                 break
         
-        display_board(board)
-
-        if check_for_winner(board):
-            prompt(check_for_winner(board))
-        else:
-            prompt("It's a draw!")
-        
-        prompt('Continue playing? Enter y or n')
-        answer = input()
-        if answer[0] not in {'y', 'Y'}:
+        if not keep_playing('Another match'):
             break
 
     prompt("Thanks for playing!")
