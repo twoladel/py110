@@ -5,16 +5,17 @@ EMPTY_SQUARE = ' '
 PLAYER_MARK = 'X'
 COMPUTER_MARK = '0'
 WIN_CONDITIONS = [
-    {1, 2, 3},
-    {1, 4, 7},
-    {1, 5, 9},
-    {4, 5, 6},
-    {7, 8, 9},
-    {2, 5, 8},
-    {3, 6, 9},
-    {3, 5, 7}
+    [1, 2, 3],
+    [1, 4, 7],
+    [1, 5, 9],
+    [4, 5, 6],
+    [7, 8, 9],
+    [2, 5, 8],
+    [3, 6, 9],
+    [3, 5, 7]
 ]
 MATCH_WIN = 5
+
 
 def initialize_board():
     return {num: ' ' for num in range(1, 10)}
@@ -46,6 +47,10 @@ def empty_squares(board):
     return [key for key, value in board.items() if value == EMPTY_SQUARE]
 
 
+def user_board(board):
+    return [key for key, value in board.items() if value == PLAYER_MARK]
+
+
 def join_or(lst, delimiter=', ', joining_word='or'):
     if len(lst) == 2:
         return f'{lst[0]} {joining_word} {lst[1]}'
@@ -73,25 +78,39 @@ def player_choice(board):
 
 def computer_choice(board):
     options = empty_squares(board)
+    player_state = user_board(board)
     if options:
+        for win in WIN_CONDITIONS:
+            threat = []
+            for key in player_state:
+                if key in win:
+                    threat.append(key)
+                if len(threat) == 2:
+                    missing_square = set(win) - set(threat)
+                    square = missing_square.pop()
+                    if square in options:
+                        board[square] = COMPUTER_MARK
+                        return
+
         square = random.choice(options)
         board[square] = COMPUTER_MARK
-    return 
+    return None
 
 
 def check_for_winner(board):
-    player_state = {key
-                    for key, value in board.items()
-                    if value == PLAYER_MARK}
-    computer_state = {key
-                      for key, value in board.items()
-                      if value == COMPUTER_MARK}
-    
     for condition in WIN_CONDITIONS:
-        if player_state >= condition:
+        s1, s2, s3 = condition
+        if (board[s1] == PLAYER_MARK
+            and board[s2] == PLAYER_MARK
+            and board[s3] == PLAYER_MARK):
             return 'You'
-        elif computer_state >= condition:
+        elif (board[s1] == COMPUTER_MARK
+              and board[s2] == COMPUTER_MARK
+              and board[s3] == COMPUTER_MARK):
             return 'Computer'
+    
+    return None
+
 
 def update_score(score, winner):
     score[winner] += 1
