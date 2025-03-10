@@ -45,13 +45,25 @@ def empty_squares(board):
     return [key for key, value in board.items() if value == EMPTY_SQUARE]
 
 
+def join_or(lst, delimiter=', ', joining_word='or'):
+    if len(lst) == 2:
+        return f'{lst[0]} {joining_word} {lst[1]}'
+    elif len(lst) > 2:
+        last_num = lst.pop()
+        choices = delimiter.join(lst)
+        return f'{choices}{delimiter}{joining_word} {last_num}'
+    
+    choices = delimiter.join(lst)
+    return f'{choices}'
+
+
 def player_choice(board):
     options = empty_squares(board)
 
     while True:
         valid_choices = [str(num) for num in options]
         prompt("Choose a square from these options: ")
-        prompt(', '.join(valid_choices))
+        prompt(join_or(valid_choices))
         square = input()
         if square in valid_choices:
             break
@@ -110,5 +122,5 @@ def play_tic_tac_toe():
             break
 
     prompt("Thanks for playing!")
-    
+
 play_tic_tac_toe()
