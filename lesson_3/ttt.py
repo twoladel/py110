@@ -21,46 +21,102 @@ Basic steps for the program:
             and ask to play again.
         if no, display the current board and prompt user
 '''
-'''
-PEDAC for updating the board
-When we mark a 'square' on the board, we want to place an X or 0 in the middle.
-Second print statement of the row and the third space within specified column.
-Use f-string to place variable placeholders in the middle of rows
-Variables are set to empty strings (dict- keys are squares, values empty)
-Pass dict with the key (square to update) and X or 0 as value 
-Update game board dict and print updated board
-Define game board with a dict argument
-Pass empty dict to reset board
-'''
 
-def display_board(choice_dict):
-    board_dict = {
-        1: ' ',
-        2: ' ',
-        3: ' ',
-        4: ' ',
-        5: ' ',
-        6: ' ',
-        7: ' ',
-        8: ' ',
-        9: ' '
-    }
+import random
 
-    board_dict |= choice_dict
+WIN_CONDITIONS = [
+    {1, 2, 3},
+    {1, 4, 7},
+    {1, 5, 9},
+    {4, 5, 6},
+    {7, 8, 9},
+    {2, 5, 8},
+    {3, 6, 9},
+    {3, 5, 7}
+]
 
+def initialize_board():
+    return {num: ' ' for num in range(1, 10)}
+
+
+def display_board(board):
     print('')
     print('     |     |')
-    print(f'  {board_dict[1]}  |  {board_dict[2]}  |  {board_dict[3]}')
+    print(f'  {board[1]}  |  {board[2]}  |  {board[3]}')
     print('     |     |')
     print('-----+-----+-----')
     print('     |     |')
-    print(f'  {board_dict[4]}  |  {board_dict[5]}  |  {board_dict[6]}')
+    print(f'  {board[4]}  |  {board[5]}  |  {board[6]}')
     print('     |     |')
     print('-----+-----+-----')
     print('     |     |')
-    print(f'  {board_dict[7]}  |  {board_dict[8]}  |  {board_dict[9]}')
+    print(f'  {board[7]}  |  {board[8]}  |  {board[9]}')
     print('     |     |')
     print('')
 
-choice_dict = {}
-display_board(choice_dict)
+
+def prompt(message):
+    print(f'==> {message}')
+
+
+def player_choice(board):
+    options = [key for key, value in board.items() if value == ' ']
+    square = 0
+    while square not in options:
+        prompt("Choose a square from these options: ")
+        prompt(f'{options}')
+        square = int(input())
+
+    return {square: 'X'}
+
+
+def computer_choice(board):
+    options = [key for key, value in board.items() if value == ' ']
+    if options:
+        square = random.choice(options)
+        return {square: '0'}
+    else:
+        return {}
+
+
+def check_for_winner(board):
+    player_state = {key for key, value in board.items() if value == 'X'}
+    computer_state = {key for key, value in board.items() if value == '0'}
+    for condition in WIN_CONDITIONS:
+        if player_state >= condition:
+            return 'User wins!'
+        elif computer_state >= condition:
+            return 'Computer wins!'
+
+
+def check_for_draw(board):
+    return not [key for key, value in board.items() if value == ' ']
+
+
+def play_round(board):
+    board |= player_choice(board)
+    board |= computer_choice(board)
+    display_board(board)
+
+def play_game():
+    while True:
+        board = initialize_board()
+        display_board(board)
+
+        while True:
+            play_round(board)
+            winner = check_for_winner(board)
+            if winner:
+                print(winner)
+                break
+            draw = check_for_draw(board)
+            if draw:
+                print("It's a draw")
+                break
+        
+        prompt('Continue playing? Enter y or n')
+        answer = input()
+        if answer[0] in {'n', 'N'}:
+            break
+
+play_game()
