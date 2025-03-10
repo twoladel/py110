@@ -82,29 +82,33 @@ def check_for_winner(board):
             return 'Computer wins!'
 
 
-def play_round(board):
-    player_choice(board)
-    computer_choice(board)
-    display_board(board)
-
-def play_game():
+def play_tic_tac_toe():
     while True:
         board = initialize_board()
-        display_board(board)
 
         while True:
-            play_round(board)
-            winner = check_for_winner(board)
-            if winner:
-                print(winner)
+            display_board(board)
+
+            player_choice(board)
+            if check_for_winner(board) or not empty_squares(board):
                 break
-            if not empty_squares(board):
-                print("It's a draw")
+
+            computer_choice(board)
+            if check_for_winner(board) or not empty_squares(board):
                 break
+        
+        display_board(board)
+
+        if check_for_winner(board):
+            prompt(check_for_winner(board))
+        else:
+            prompt("It's a draw!")
         
         prompt('Continue playing? Enter y or n')
         answer = input()
-        if answer[0] in {'n', 'N'}:
+        if answer[0] not in {'y', 'Y'}:
             break
 
-play_game()
+    prompt("Thanks for playing!")
+    
+play_tic_tac_toe()
