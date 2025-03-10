@@ -1,29 +1,9 @@
-'''Write a tic tac toe program for a user to play the computer.'''
-
-'''
-Basic steps for the program:
-1. Display the empty board
-2. Prompt user to pick a sqaure
-    - easy use input() 
-    - what kind of input do I want? 
-        row # and col # (thinking nested lists)
-3. Computer picks a square
-    - use random module for computer selection
-    - start with a list of possible choices (tuples)
-        - choices are tuples: (row #, col #)
-    - randomly select a tuple from the list. 
-    - when either player picks a square, remove it from the set
-4. is there a winner? 
-    if yes, display the winner
-        and ask to play again.
-    if no, is the board full?
-        if yes, display DRAW
-            and ask to play again.
-        if no, display the current board and prompt user
-'''
-
+import os
 import random
 
+EMPTY_SQUARE = ' '
+PLAYER_MARK = 'X'
+COMPUTER_MARK = '0'
 WIN_CONDITIONS = [
     {1, 2, 3},
     {1, 4, 7},
@@ -40,6 +20,8 @@ def initialize_board():
 
 
 def display_board(board):
+    os.system('clear')
+
     print('')
     print('     |     |')
     print(f'  {board[1]}  |  {board[2]}  |  {board[3]}')
@@ -59,29 +41,40 @@ def prompt(message):
     print(f'==> {message}')
 
 
-def player_choice(board):
-    options = [key for key, value in board.items() if value == ' ']
-    square = 0
-    while square not in options:
-        prompt("Choose a square from these options: ")
-        prompt(f'{options}')
-        square = int(input())
+def empty_squares(board):
+    return [key for key, value in board.items() if value == EMPTY_SQUARE]
 
-    return {square: 'X'}
+
+def player_choice(board):
+    options = empty_squares(board)
+
+    while True:
+        valid_choices = [str(num) for num in options]
+        prompt("Choose a square from these options: ")
+        prompt(', '.join(valid_choices))
+        square = input()
+        if square in valid_choices:
+            break
+
+    board[int(square)] = PLAYER_MARK
 
 
 def computer_choice(board):
-    options = [key for key, value in board.items() if value == ' ']
+    options = empty_squares(board)
     if options:
         square = random.choice(options)
-        return {square: '0'}
-    else:
-        return {}
+        board[square] = COMPUTER_MARK
+    return 
 
 
 def check_for_winner(board):
-    player_state = {key for key, value in board.items() if value == 'X'}
-    computer_state = {key for key, value in board.items() if value == '0'}
+    player_state = {key
+                    for key, value in board.items()
+                    if value == PLAYER_MARK}
+    computer_state = {key
+                      for key, value in board.items()
+                      if value == COMPUTER_MARK}
+    
     for condition in WIN_CONDITIONS:
         if player_state >= condition:
             return 'User wins!'
@@ -89,13 +82,9 @@ def check_for_winner(board):
             return 'Computer wins!'
 
 
-def check_for_draw(board):
-    return not [key for key, value in board.items() if value == ' ']
-
-
 def play_round(board):
-    board |= player_choice(board)
-    board |= computer_choice(board)
+    player_choice(board)
+    computer_choice(board)
     display_board(board)
 
 def play_game():
@@ -109,8 +98,7 @@ def play_game():
             if winner:
                 print(winner)
                 break
-            draw = check_for_draw(board)
-            if draw:
+            if not empty_squares(board):
                 print("It's a draw")
                 break
         
