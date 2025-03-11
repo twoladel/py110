@@ -84,18 +84,18 @@ def computer_choice(board):
     if not options:
         return 
     
+    computer_state = computer_board(board)
+    if find_move(computer_state, options):
+        square = find_move(computer_state, options)
+        board[square] = COMPUTER_MARK
+        return
+    
     user_state = user_board(board)
     if find_move(user_state, options):
         square = find_move(user_state, options)
         board[square] = COMPUTER_MARK
         return 
             
-    computer_state = computer_board(board)
-    if find_move(computer_state, options):
-        square = find_move(computer_state, options)
-        board[square] = COMPUTER_MARK
-        return
-
     square = random.choice(options)
     board[square] = COMPUTER_MARK
 
