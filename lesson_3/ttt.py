@@ -103,12 +103,10 @@ def computer_choice(board):
 def find_move(player_state, options):
     for win in WIN_CONDITIONS:
         square = find_square(win, player_state)
-        print(square)
 
         if square and square in options:
             return square
-
-    return 
+    return
 
 def find_square(win, player_state):
     analyzer = []
