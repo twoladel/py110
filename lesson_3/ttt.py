@@ -50,6 +50,9 @@ def empty_squares(board):
 def user_board(board):
     return [key for key, value in board.items() if value == PLAYER_MARK]
 
+def computer_board(board):
+    return [key for key, value in board.items() if value == COMPUTER_MARK]
+
 
 def join_or(lst, delimiter=', ', joining_word='or'):
     if len(lst) == 2:
@@ -78,24 +81,43 @@ def player_choice(board):
 
 def computer_choice(board):
     options = empty_squares(board)
-    player_state = user_board(board)
-    if options:
-        for win in WIN_CONDITIONS:
-            threat = []
-            for key in player_state:
-                if key in win:
-                    threat.append(key)
-                if len(threat) == 2:
-                    missing_square = set(win) - set(threat)
-                    square = missing_square.pop()
-                    if square in options:
-                        board[square] = COMPUTER_MARK
-                        return
-
-        square = random.choice(options)
+    if not options:
+        return 
+    
+    user_state = user_board(board)
+    if find_move(user_state, options):
+        square = find_move(user_state, options)
         board[square] = COMPUTER_MARK
-    return None
+        return 
+            
+    computer_state = computer_board(board)
+    if find_move(computer_state, options):
+        square = find_move(computer_state, options)
+        board[square] = COMPUTER_MARK
+        return
 
+    square = random.choice(options)
+    board[square] = COMPUTER_MARK
+
+
+def find_move(player_state, options):
+    for win in WIN_CONDITIONS:
+        square = find_square(win, player_state)
+        print(square)
+
+        if square and square in options:
+            return square
+
+    return 
+
+def find_square(win, player_state):
+    analyzer = []
+    for key in player_state:
+        if key in win:
+            analyzer.append(key)
+        if len(analyzer) == 2:
+            missing_square = set(win) - set(analyzer)
+            return missing_square.pop()
 
 def check_for_winner(board):
     for condition in WIN_CONDITIONS:
