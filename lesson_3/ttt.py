@@ -1,6 +1,7 @@
 import os
 import random
 
+FIRST_PLAYER = 'computer'
 EMPTY_SQUARE = ' '
 PLAYER_MARK = 'X'
 COMPUTER_MARK = '0'
@@ -45,7 +46,6 @@ def prompt(message):
 
 def empty_squares(board):
     return [key for key, value in board.items() if value == EMPTY_SQUARE]
-
 
 def user_board(board):
     return [key for key, value in board.items() if value == PLAYER_MARK]
@@ -95,7 +95,11 @@ def computer_choice(board):
         square = find_move(user_state, options)
         board[square] = COMPUTER_MARK
         return 
-            
+    
+    if board[5] == EMPTY_SQUARE:
+        board[5] = COMPUTER_MARK
+        return
+    
     square = random.choice(options)
     board[square] = COMPUTER_MARK
 
@@ -164,15 +168,21 @@ def play_tic_tac_toe():
 
             while True:
                 display_board(board)
+                if FIRST_PLAYER == 'player':
+                    player_choice(board)
+                    if check_for_winner(board) or not empty_squares(board):
+                        break
+                    computer_choice(board)
+                    if check_for_winner(board) or not empty_squares(board):
+                        break
+                if FIRST_PLAYER == 'computer':
+                    computer_choice(board)
+                    if check_for_winner(board) or not empty_squares(board):
+                        break
+                    player_choice(board)
+                    if check_for_winner(board) or not empty_squares(board):
+                        break
 
-                player_choice(board)
-                if check_for_winner(board) or not empty_squares(board):
-                    break
-
-                computer_choice(board)
-                if check_for_winner(board) or not empty_squares(board):
-                    break
-            
             display_board(board)
 
             if check_for_winner(board):
@@ -197,3 +207,14 @@ def play_tic_tac_toe():
     prompt("Thanks for playing!")
 
 play_tic_tac_toe()
+
+'''
+Alternate turns
+Constant variable at the top of the program
+
+list of 'player', 'computer', and 'choose'
+
+prompt:
+Who goes first? p for you, c for computer. 
+
+'''
