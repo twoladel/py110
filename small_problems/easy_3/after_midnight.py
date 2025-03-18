@@ -33,18 +33,26 @@ def pad_zeros(num):
     str_num = str(num)
     if len(str_num) == 1:
         return '0' + str_num
-    
+
     return str_num
 
 
+def get_minutes(num):
+    while num > 1440:
+        num -= 1440
+
+    while num < 0:
+        num += 1440
+    return num
+
+
 def time_of_day(num):
-    time_in_minutes = num % 1440  # Works in Python, but not reliable across languages
-    # TODO: Change implementation above due to unreliability of modulo with negative numbers
+    time_in_minutes = get_minutes(num)
     hour, minutes = divmod(time_in_minutes, 60)
 
     hour = pad_zeros(hour)
     minutes = pad_zeros(minutes)
-    
+
     return f'{hour}:{minutes}'
 
 print(time_of_day(0) == "00:00")        # True
