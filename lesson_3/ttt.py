@@ -1,7 +1,8 @@
 import os
 import random
 
-FIRST_PLAYER = 'computer'
+COMPUTER = 'computer'
+HUMAN = 'player'
 EMPTY_SQUARE = ' '
 PLAYER_MARK = 'X'
 COMPUTER_MARK = '0'
@@ -16,6 +17,7 @@ WIN_CONDITIONS = [
     [3, 5, 7]
 ]
 MATCH_WIN = 5
+MIDDLE_SQUARE = 5
 
 
 def initialize_board():
@@ -57,10 +59,10 @@ def computer_board(board):
 def join_or(lst, delimiter=', ', joining_word='or'):
     if len(lst) == 2:
         return f'{lst[0]} {joining_word} {lst[1]}'
-    elif len(lst) > 2:
+    if len(lst) > 2:
         choices = delimiter.join(lst[0:-1])
         return f'{choices}{delimiter}{joining_word} {lst[-1]}'
-    
+
     choices = delimiter.join(lst)
     return f'{choices}'
 
@@ -82,24 +84,24 @@ def player_choice(board):
 def computer_choice(board):
     options = empty_squares(board)
     if not options:
-        return 
-    
+        return
+
     computer_state = computer_board(board)
     if find_move(computer_state, options):
         square = find_move(computer_state, options)
         board[square] = COMPUTER_MARK
         return
-    
+
     user_state = user_board(board)
     if find_move(user_state, options):
         square = find_move(user_state, options)
         board[square] = COMPUTER_MARK
-        return 
-    
-    if board[5] == EMPTY_SQUARE:
-        board[5] = COMPUTER_MARK
         return
-    
+
+    if board[MIDDLE_SQUARE] == EMPTY_SQUARE:
+        board[MIDDLE_SQUARE] = COMPUTER_MARK
+        return
+
     square = random.choice(options)
     board[square] = COMPUTER_MARK
 
@@ -110,7 +112,7 @@ def find_move(player_state, options):
 
         if square and square in options:
             return square
-    return
+    return None
 
 def find_square(win, player_state):
     analyzer = []
@@ -120,6 +122,7 @@ def find_square(win, player_state):
         if len(analyzer) == 2:
             missing_square = set(win) - set(analyzer)
             return missing_square.pop()
+    return None
 
 def check_for_winner(board):
     for condition in WIN_CONDITIONS:
@@ -128,11 +131,11 @@ def check_for_winner(board):
             and board[s2] == PLAYER_MARK
             and board[s3] == PLAYER_MARK):
             return 'You'
-        elif (board[s1] == COMPUTER_MARK
+        if (board[s1] == COMPUTER_MARK
               and board[s2] == COMPUTER_MARK
               and board[s3] == COMPUTER_MARK):
             return 'Computer'
-    
+
     return None
 
 
@@ -151,37 +154,63 @@ def detect_match_winner(score):
         if wins == MATCH_WIN:
             return player
         return None
-    
+
+def choose_square(board, current_player):
+    if current_player == 'player':
+        player_choice(board)
+    else:
+        computer_choice(board)
+
+def alternate_player(current_player):
+    if current_player == 'player':
+        return 'computer'
+
+    return 'player'
+
+def first_turn():
+    prompt("Who goes first? Enter 'p' for yourself"
+            " or 'c' for computer.")
+    first_player = input()
+    while first_player.casefold() not in ['p', 'c']:
+        prompt("Invalid choice. Please choose p or c")
+        first_player = input()
+
+    return first_player
+
+def set_first_player(first_player):
+    if first_player == 'p':
+        return HUMAN
+
+    if first_player == 'c':
+        return COMPUTER
+
+    return None
+
 def keep_playing(message):
     prompt(f'{message}? y or n')
     answer = input()
-    if answer[0] in {'y', 'Y'}:
+    while answer.casefold() not in {'y', 'n', 'yes', 'no'}:
+        prompt("Invalid input. Enter y or n.")
+        answer = input()
+
+    if answer.casefold() in {'y', 'yes'}:
         return True
+
     return False
 
 def play_tic_tac_toe():
     while True:
         score = {'You': 0, 'Computer': 0}
-
+        current_player = set_first_player(first_turn())
         while True:
             board = initialize_board()
 
             while True:
                 display_board(board)
-                if FIRST_PLAYER == 'player':
-                    player_choice(board)
-                    if check_for_winner(board) or not empty_squares(board):
-                        break
-                    computer_choice(board)
-                    if check_for_winner(board) or not empty_squares(board):
-                        break
-                if FIRST_PLAYER == 'computer':
-                    computer_choice(board)
-                    if check_for_winner(board) or not empty_squares(board):
-                        break
-                    player_choice(board)
-                    if check_for_winner(board) or not empty_squares(board):
-                        break
+                choose_square(board, current_player)
+                current_player = alternate_player(current_player)
+                if check_for_winner(board) or not empty_squares(board):
+                    break
 
             display_board(board)
 
@@ -200,21 +229,10 @@ def play_tic_tac_toe():
 
             if not keep_playing('Continue playing'):
                 break
-        
+
         if not keep_playing('Another match'):
             break
 
     prompt("Thanks for playing!")
 
 play_tic_tac_toe()
-
-'''
-Alternate turns
-Constant variable at the top of the program
-
-list of 'player', 'computer', and 'choose'
-
-prompt:
-Who goes first? p for you, c for computer. 
-
-'''
