@@ -10,7 +10,8 @@ def prompt(message):
     print(f'==> {message}')
 
 def initialize_deck():
-    return {suit: {card: CARDS[card] for card in CARDS} for suit in SUITS}
+    return {suit: {card: card_value for card, card_value in CARDS.items()}
+            for suit in SUITS}
 
 def choose_card(hand, deck):
     suit = random.choice(list(deck.keys()))
@@ -142,7 +143,7 @@ def play_hand():
 
         human_total = human_turn(human_hand, deck)
         if bust_check(human_total):
-            prompt(f'You busted! Dealer wins.')
+            prompt('You busted! Dealer wins.')
             break
 
         computer_total = computer_turn(computer_hand, deck)
@@ -152,7 +153,7 @@ def play_hand():
 
         declare_winner(human_total, computer_total)
         break
- 
+
 
 def play_twenty_one():
     while True:
