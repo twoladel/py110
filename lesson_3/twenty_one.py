@@ -1,50 +1,6 @@
-'''
-P-
-Two players - user and computer
-four cards dealt, three exposed (one dealer card hidden)
-user always first
-Dealter hits until cards >= 17
-Either player busts == game over
-No bust calculate the highest total
-Ace can be 1 or 11
-    have to determine the value of an Ace each time a new card is dealt
-    to a hand containing an Ace. Complex if multiple Aces (each could be diff)
-
-
-D-
-dict called cards:
-    nested dicts for each suit (4)
-        each suit dict will have cards as keys A thru 2 and num value as values
-Randomly deal cards
-    how to use random module with dicts?
-    when card is dealt it shoud be removed from the dict
-hands should be stored as dicts
-    update hand dict with key: value pair chosen (face and value)
-sum hand_dict.values() to track both players scores
-
-
-A- 
-Initiallize deck (nested dict comprehension)
-Deal four cards alternating between human and computer
-    UI: one of dealers cards will display unknown, but program knows the value.
-wait for player input to hit or stay
-    hit requires another card (helper function)
-    recalculate total
-        if bust end hand
-    wait for player to choose again
-        (while loop with a break statement?) if stay: break
-computer hits below 17
-    hit requires another card (same helper function)
-    recalculate total
-        if bust end hand
-    decide again
-        same while loop till break
-compare cards and decide winner
-'''
 import random
 
 SUITS = ['hearts', 'spades', 'diamonds', 'clubs']
-# TODO: change ace back to a list with 1 and 11
 CARDS = {'2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9':9,
         '10': 10, 'Jack': 10, 'Queen': 10, 'King': 10, 'Ace': 1}
 STAY = {'stay', 's'}
@@ -82,16 +38,15 @@ def display_initial_hand(human, computer):
     prompt(f'You have: {human_cards[0]} and {human_cards[1]}')
     print()
 
-def update_hand(card, hand_value):    
+def update_hand(card, hand_value):
     prompt(f'The card was a {card}')
     prompt(f'The current total is {hand_value}.')
 
 def calculate_hand(hand):
-    # TODO: add Ace value handling in here
     if not ace_in_hand(hand):
         return sum([card_value for suit in hand.values()
                 for card_value in suit.values()])
-    
+
     adjust_aces(hand)
 
     return sum([card_value for suit in hand.values()
@@ -145,7 +100,7 @@ def computer_turn(computer_hand, deck):
         new_card = choose_card(computer_hand, deck)
         total = calculate_hand(computer_hand)
         update_hand(new_card, total)
-    
+
     return total
 
 def bust_check(score):
@@ -177,7 +132,7 @@ def play_again():
     return False
 
 
-def play_twenty_one():
+def play_hand():
     while True:
         deck = initialize_deck()
         human_hand = deal_hand(deck)
@@ -196,9 +151,19 @@ def play_twenty_one():
             break
 
         declare_winner(human_total, computer_total)
-        
-        if not play_again():
+        break
+ 
+
+def play_twenty_one():
+    while True:
+        play_hand()
+        answer = play_again()
+        if not answer:
             break
 
 play_twenty_one()
 
+# TODO: Different messages for player and dealer when getting cards
+# Announce Dealer hits! 
+# Best of 5 and then reset?
+# Clean up the UI os.system clear jawn
