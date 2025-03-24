@@ -121,7 +121,20 @@ def declare_winner(human_score, computer_score):
         prompt(f'You: {human_score} Dealer: {computer_score}')
     else:
         prompt(f'You both have: {human_score}')
-        prompt(f'Draw! A draw goes to {DEALER}.')
+        prompt('Draw!')
+
+def display_final_hands(player_hand, computer_hand):
+    lst_player_hand = [f'{card} of {suit}' 
+                        for suit, cards in player_hand.items()
+                        for card in cards.keys()]
+    
+    lst_computer_hand = [f'{card} of {suit}' 
+                        for suit, cards in computer_hand.items()
+                        for card in cards.keys()]
+    
+    prompt(f'{HUMAN} hand: {', '.join(lst_player_hand)}')
+    prompt(f"{DEALER}'s hand: {', '.join(lst_computer_hand)}")
+
 
 def play_again():
     prompt("Play again? Enter y or n")
@@ -153,7 +166,8 @@ def play_hand():
         if bust_check(computer_total):
             prompt(f'{DEALER} busted! You win!')
             break
-
+        
+        display_final_hands(human_hand, computer_hand)
         declare_winner(human_total, computer_total)
         break
 
