@@ -1,3 +1,4 @@
+import os
 import random
 
 SUITS = ['hearts', 'spades', 'diamonds', 'clubs']
@@ -5,13 +6,15 @@ CARDS = {'2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9':9,
         '10': 10, 'Jack': 10, 'Queen': 10, 'King': 10, 'Ace': 1}
 STAY = {'stay', 's'}
 HIT = {'hit', 'h'}
+HUMAN = 'Your'
+DEALER = 'The dealer'
 
 def prompt(message):
     print(f'==> {message}')
 
 def initialize_deck():
     return {suit: {card: card_value for card, card_value in CARDS.items()}
-            for suit in SUITS}
+                                    for suit in SUITS}
 
 def choose_card(hand, deck):
     suit = random.choice(list(deck.keys()))
@@ -32,16 +35,17 @@ def display_initial_hand(human, computer):
     print()
     computer_cards = [key for value in computer.values()
                         for key in value.keys()]
-    prompt(f'Dealer has: {computer_cards[0]} and unknown card')
+    prompt(f'{DEALER} has: {computer_cards[0]} and unknown card')
 
     human_cards = [key for value in human.values()
                     for key in value.keys()]
     prompt(f'You have: {human_cards[0]} and {human_cards[1]}')
     print()
 
-def update_hand(card, hand_value):
+def update_hand(card, hand_value, player):
     prompt(f'The card was a {card}')
-    prompt(f'The current total is {hand_value}.')
+    prompt(f'{player} current total is {hand_value}.')
+    print()
 
 def calculate_hand(hand):
     if not ace_in_hand(hand):
@@ -54,19 +58,15 @@ def calculate_hand(hand):
                 for card_value in suit.values()])
 
 def adjust_aces(hand):
-    non_ace_total = sum([card_value for suit in hand.values()
-                                    for card, card_value in suit.items()
-                                    if card != 'Ace'])
-    ace_total = sum([card_value for suit in hand.values()
-                                    for card, card_value in suit.items()
-                                    if card == 'Ace'])
-    sub_total = non_ace_total + ace_total
+    sub_total = sum([card_value for suit in hand.values()
+                                for card_value in suit.values()])
 
     for suit, cards in hand.items():
         for card, value in cards.items():
             if card == 'Ace' and value == 1:
                 if sub_total + 10 <= 21:
                     hand[suit][card] = 11
+
 
 def ace_in_hand(hand):
     return [card for suit in hand.values()
@@ -84,12 +84,13 @@ def human_turn(human_hand, deck):
 
         if choice.casefold() in STAY:
             total = calculate_hand(human_hand)
+            os.system('clear')
             break
 
         if choice.casefold() in HIT:
             new_card = choose_card(human_hand, deck)
             total = calculate_hand(human_hand)
-            update_hand(new_card, total)
+            update_hand(new_card, total, HUMAN)
             if total > 21:
                 break
 
@@ -98,9 +99,10 @@ def human_turn(human_hand, deck):
 def computer_turn(computer_hand, deck):
     total = calculate_hand(computer_hand)
     while total < 17:
+        prompt(f'{DEALER} hits!')
         new_card = choose_card(computer_hand, deck)
         total = calculate_hand(computer_hand)
-        update_hand(new_card, total)
+        update_hand(new_card, total, DEALER)
 
     return total
 
@@ -115,11 +117,11 @@ def declare_winner(human_score, computer_score):
         prompt('You win!')
         prompt(f'You: {human_score} Dealer: {computer_score}')
     elif computer_score > human_score:
-        prompt('Dealer wins!')
+        prompt(f'{DEALER} wins!')
         prompt(f'You: {human_score} Dealer: {computer_score}')
     else:
         prompt(f'You both have: {human_score}')
-        prompt('Draw! A draw goes to the dealer.')
+        prompt(f'Draw! A draw goes to {DEALER}.')
 
 def play_again():
     prompt("Play again? Enter y or n")
@@ -129,6 +131,7 @@ def play_again():
         answer = input().casefold()
 
     if answer in {'y', 'yes'}:
+        os.system('clear')
         return True
     return False
 
@@ -143,12 +146,12 @@ def play_hand():
 
         human_total = human_turn(human_hand, deck)
         if bust_check(human_total):
-            prompt('You busted! Dealer wins.')
+            prompt(f'You busted! {DEALER} wins.')
             break
 
         computer_total = computer_turn(computer_hand, deck)
         if bust_check(computer_total):
-            prompt('The Dealer busted! You win!')
+            prompt(f'{DEALER} busted! You win!')
             break
 
         declare_winner(human_total, computer_total)
@@ -163,8 +166,3 @@ def play_twenty_one():
             break
 
 play_twenty_one()
-
-# TODO: Different messages for player and dealer when getting cards
-# Announce Dealer hits! 
-# Best of 5 and then reset?
-# Clean up the UI os.system clear jawn
