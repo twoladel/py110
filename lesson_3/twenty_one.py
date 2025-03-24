@@ -88,8 +88,34 @@ def update_hand(card, hand_value):
 
 def calculate_hand(hand):
     # TODO: add Ace value handling in here
-    return sum([value for value in hand.values()
-                for value in value.values()])
+    if not ace_in_hand(hand):
+        return sum([card_value for suit in hand.values()
+                for card_value in suit.values()])
+    
+    adjust_aces(hand)
+
+    return sum([card_value for suit in hand.values()
+                for card_value in suit.values()])
+
+def adjust_aces(hand):
+    non_ace_total = sum([card_value for suit in hand.values()
+                                    for card, card_value in suit.items()
+                                    if card != 'Ace'])
+    ace_total = sum([card_value for suit in hand.values()
+                                    for card, card_value in suit.items()
+                                    if card == 'Ace'])
+    sub_total = non_ace_total + ace_total
+
+    for suit, cards in hand.items():
+        for card, value in cards.items():
+            if card == 'Ace' and value == 1:
+                if sub_total + 10 <= 21:
+                    hand[suit][card] = 11
+
+def ace_in_hand(hand):
+    return [card for suit in hand.values()
+            for card in suit.values()
+            if 'Ace' in suit.keys()]
 
 def human_turn(human_hand, deck):
     while True:
@@ -128,12 +154,28 @@ def bust_check(score):
     return False
 
 def declare_winner(human_score, computer_score):
+    print()
     if human_score > computer_score:
         prompt('You win!')
+        prompt(f'You: {human_score} Dealer: {computer_score}')
     elif computer_score > human_score:
         prompt('Dealer wins!')
+        prompt(f'You: {human_score} Dealer: {computer_score}')
     else:
+        prompt(f'You both have: {human_score}')
         prompt('Draw! A draw goes to the dealer.')
+
+def play_again():
+    prompt("Play again? Enter y or n")
+    answer = input().casefold()
+    while answer not in {'y', 'yes', 'n', 'no'}:
+        prompt('Invalid input. Enter y or n')
+        answer = input().casefold()
+
+    if answer in {'y', 'yes'}:
+        return True
+    return False
+
 
 def play_twenty_one():
     while True:
@@ -142,16 +184,21 @@ def play_twenty_one():
         computer_hand = deal_hand(deck)
 
         display_initial_hand(human_hand, computer_hand)
+
         human_total = human_turn(human_hand, deck)
         if bust_check(human_total):
             prompt(f'You busted! Dealer wins.')
             break
+
         computer_total = computer_turn(computer_hand, deck)
         if bust_check(computer_total):
             prompt('The Dealer busted! You win!')
             break
+
         declare_winner(human_total, computer_total)
-        break
+        
+        if not play_again():
+            break
 
 play_twenty_one()
 
