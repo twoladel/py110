@@ -6,12 +6,17 @@
 def leading_substrings(word):
     return [word[0:i] for i in range(1, len(word) + 1)]
 
-def substrings(string):
-    result = []
-    for idx in range(len(string)):
-        result.extend(leading_substrings(string[idx:]))
+# def substrings(string):
+#     result = []
+#     for idx in range(len(string)):
+#         result.extend(leading_substrings(string[idx:]))
 
-    return result
+#     return result
+
+def substrings(string):
+    return [substring 
+            for idx in range(len(string))
+            for substring in leading_substrings(string[idx:])]
 
 # expected_result = [
 #     "a", "ab", "abc", "abcd", "abcde",
