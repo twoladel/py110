@@ -10,15 +10,14 @@
 
 '''Refactored as a comprehension with a helper function.'''
 
+VOWELS = 'AEIOUaeiou'
+
 def remove_vowels(string_list):
     return [no_vowels(string) for string in string_list]
 
 def no_vowels(string):
-    new_str = ''
-    for char in string:
-        if char.casefold() not in 'aeiou':
-            new_str += char
-    return new_str
+    return ''.join([char for char in string if char not in VOWELS])
+    
 
 
 # All of these examples should print True
