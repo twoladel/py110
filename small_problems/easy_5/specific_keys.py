@@ -1,7 +1,8 @@
 def keep_keys(dict, key_list):
     return {
         key: value for key, value in dict.items()
-        if key in key_list}
+        if key in key_list
+        }
 
 
 input_dict = {
