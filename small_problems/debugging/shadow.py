@@ -1,7 +1,3 @@
-'''
-
-'''
-
 def mutltiply_sum(numbers, factor):
     return factor * sum(numbers)
 
