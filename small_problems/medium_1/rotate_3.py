@@ -1,13 +1,3 @@
-'''
-important numbers:
-    len of sequence of digits
-    one less than len is the number of rotations
-    starting at the negative len idx
-    first example below is:
-        range(-6, -1, 1) --> range(-len(digits), -1, 1)
-
-get len and pass number and len to the rightmost function
-'''
 def rotate_rightmost_digits(number, count):
     nums = list(str(number))
     last_digit = nums.pop(-count)
