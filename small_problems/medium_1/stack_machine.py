@@ -1,8 +1,25 @@
+POP_COMMANDS = ['ADD', 'SUB', 'MULT', 'DIV', 'REMAINDER', 'POP']
+
+def stack_empty(stack):
+    if stack:
+        return False
+    return True
+
+def valid_number(string):
+    if (string[0] == '-' and string[1:].isdigit()) or string.isdigit():
+        return True
+    return False
+    
+
 def minilang(commands):
     register = 0
     stack = []
 
     for command in commands.split():
+        if command in POP_COMMANDS and stack_empty(stack):
+            print('ERROR: Stack is empty.')
+            return None
+        
         match command:
             case 'PUSH':
                 stack.append(register)
@@ -21,7 +38,16 @@ def minilang(commands):
             case 'PRINT':
                 print(register)
             case _:
+                if not valid_number(command):
+                    print(f'Invalid command: {command}')
+                    return None
                 register = int(command)
+
+minilang('5 PUSH -3SQUASH3 PRINT')
+# Invalid command: -3SQUASH3
+
+minilang('POP')
+# ERROR: Stack is empty.
 
 minilang('PRINT')
 # 0
