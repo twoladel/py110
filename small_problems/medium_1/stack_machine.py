@@ -49,6 +49,9 @@ minilang('5 PUSH -3SQUASH3 PRINT')
 minilang('POP')
 # ERROR: Stack is empty.
 
+minilang('5 PUSH POP ADD POP')
+# ERROR: Stack is empty.
+
 minilang('PRINT')
 # 0
 
