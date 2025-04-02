@@ -8,6 +8,8 @@ def is_prime(number):
         
     return True
 
+# LS also showed solution with math.sqrt
+
 print(is_prime(1) == False)              # True
 print(is_prime(2) == True)               # True
 print(is_prime(3) == True)               # True
