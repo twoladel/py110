@@ -21,7 +21,7 @@ def next_featured(number):
 
     start = start_at_odd_mulitple_of_seven(number)
 
-    for num in range(start, 9876543202, 14):
+    for num in range(start, MAX_FEATURED + 1, 14):
         if len(str(num)) == len(set(str(num))):
             return num
 
