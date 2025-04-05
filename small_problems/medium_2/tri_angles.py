@@ -8,8 +8,7 @@ def is_valid(angles):
             return False
     return True
 
-def triangle(ang1, ang2, ang3):
-    angles = [ang1, ang2, ang3]
+def triangle(*angles):
 
     if not is_valid(angles):
         return 'invalid'
