@@ -39,6 +39,10 @@ own, without using any external libraries.
 Take care not to modify the original matrix -- your function must produce a
 new matrix and leave the input matrix list unchanged.'''
 
+def transpose(nested_list):
+    pass
+
+
 # examples:
 matrix = [
     [1, 5, 8],
