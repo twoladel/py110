@@ -438,23 +438,27 @@ for each sublist
 '''
 
 def transform_lists(nested_list):
-    result = []
+    # result = []
+    return [
+        (sum(sublist), 
+        ['even' if number % 2 == 0 else number for number in sublist ])
+        for sublist in nested_list
+    ]
+    # for sublist in nested_list:
+    #     sublist_sum = sum(sublist)
+    #     new_sublist = []
+    #     for number in sublist:
+    #         if number % 2 == 0:
+    #             new_sublist.append('even')
+    #         else:
+    #             new_sublist.append(number)
+    #     result.append((sublist_sum, new_sublist))
+    # return result
 
-    for sublist in nested_list:
-        sublist_sum = sum(sublist)
-        new_sublist = []
-        for number in sublist:
-            if number % 2 == 0:
-                new_sublist.append('even')
-            else:
-                new_sublist.append(number)
-        result.append((sublist_sum, new_sublist))
-    return result
-
-# print(transform_lists([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == [(6, [1, "even", 3]), (15, ["even", 5, "even"]), (24, [7, "even", 9])])
-# print(transform_lists([[10, 20], [30, 40, 50]]) == [(30, ["even", "even"]), (120, ["even", "even", "even"])])
-# print(transform_lists([[1, 3], [5, 7, 9]]) == [(4, [1, 3]), (21, [5, 7, 9])])
-# print(transform_lists([[]]) == [(0, [])])
+print(transform_lists([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == [(6, [1, "even", 3]), (15, ["even", 5, "even"]), (24, [7, "even", 9])])
+print(transform_lists([[10, 20], [30, 40, 50]]) == [(30, ["even", "even"]), (120, ["even", "even", "even"])])
+print(transform_lists([[1, 3], [5, 7, 9]]) == [(4, [1, 3]), (21, [5, 7, 9])])
+print(transform_lists([[]]) == [(0, [])])
 
 
 
