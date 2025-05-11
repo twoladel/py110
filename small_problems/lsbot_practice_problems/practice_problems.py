@@ -396,9 +396,9 @@ def group_anagrams(lst):
     return list(anagrams.values())
 
 # Examples:
-print(group_anagrams(["eat", "tea", "tan", "ate", "nat", "bat"]) == [["eat", "tea", "ate"], ["tan", "nat"], ["bat"]])
-print(group_anagrams(["listen", "silent", "enlist", "hello", "world"]) == [["listen", "silent", "enlist"], ["hello"], ["world"]])
-print(group_anagrams([]) == [])
+# print(group_anagrams(["eat", "tea", "tan", "ate", "nat", "bat"]) == [["eat", "tea", "ate"], ["tan", "nat"], ["bat"]])
+# print(group_anagrams(["listen", "silent", "enlist", "hello", "world"]) == [["listen", "silent", "enlist"], ["hello"], ["world"]])
+# print(group_anagrams([]) == [])
 
 
 
@@ -441,7 +441,7 @@ def transform_lists(nested_list):
     # result = []
     return [
         (sum(sublist), 
-        ['even' if number % 2 == 0 else number for number in sublist ])
+        ['even' if number % 2 == 0 else number for number in sublist])
         for sublist in nested_list
     ]
     # for sublist in nested_list:
@@ -455,10 +455,122 @@ def transform_lists(nested_list):
     #     result.append((sublist_sum, new_sublist))
     # return result
 
-print(transform_lists([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == [(6, [1, "even", 3]), (15, ["even", 5, "even"]), (24, [7, "even", 9])])
-print(transform_lists([[10, 20], [30, 40, 50]]) == [(30, ["even", "even"]), (120, ["even", "even", "even"])])
-print(transform_lists([[1, 3], [5, 7, 9]]) == [(4, [1, 3]), (21, [5, 7, 9])])
-print(transform_lists([[]]) == [(0, [])])
+# print(transform_lists([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == [(6, [1, "even", 3]), (15, ["even", 5, "even"]), (24, [7, "even", 9])])
+# print(transform_lists([[10, 20], [30, 40, 50]]) == [(30, ["even", "even"]), (120, ["even", "even", "even"])])
+# print(transform_lists([[1, 3], [5, 7, 9]]) == [(4, [1, 3]), (21, [5, 7, 9])])
+# print(transform_lists([[]]) == [(0, [])])
+
+
+'''
+Write a function that takes a list of dictionaries, where each dictionary 
+represents a person with 'name' and 'hobbies' keys. The 'hobbies' key maps 
+to a list of strings. Return a dictionary where keys are unique hobbies and 
+values are lists of names of people who have that hobby.
+'''
+
+'''
+P-
+input is a list of dicts
+output: dict, with hobbies now keys and lists of people who have that hobby as values
+
+converting a list of dicts to a dict
+finding unique string values in the lists associated with hobbies key
+those values become keys (don't worry about dupes because they are keys)
+
+the values in new dict are lists of names who have that hobby key
+
+
+D-
+dict comprehension
+
+A-
+
+create an empty dict: hobbies
+
+for each dict in people1 list
+    for each hobby
+        if hobby not in hobbies dict
+            add it with a list as a value containing dict['name']
+        else: we'll append name
+return hobbies dict
+'''
+
+def group_by_hobbies(people_list):
+    hobbies_dict = {}
+
+    for person in people_list:
+        for hobby in person['hobbies']:
+            if hobby not in hobbies_dict:
+                hobbies_dict[hobby] = [person['name']]
+            else:
+                hobbies_dict[hobby].append(person['name'])
+
+    return hobbies_dict
+
+  # Example:
+# people1 = [
+#     {"name": "Alice", "hobbies": ["reading", "swimming"]},
+#     {"name": "Bob", "hobbies": ["gaming", "reading"]},
+#     {"name": "Charlie", "hobbies": ["swimming", "hiking"]}
+# ]
+# print(group_by_hobbies(people1) == {
+#     "reading": ["Alice", "Bob"],
+#     "swimming": ["Alice", "Charlie"],
+#     "gaming": ["Bob"],
+#     "hiking": ["Charlie"]
+# })
 
 
 
+'''Create a function that takes a nested list structure 
+(which can contain lists at any level of nesting) and returns a 
+flattened version of the list.'''
+
+'''
+P-
+input nested list structure of varying levels
+output flattended list with all elements from any level of nested list
+
+How to know how many levels deep to go? 
+while loop?
+D-
+lists
+
+A-
+create an empty list
+while input list is not empty
+if element is not a list
+    append element to result list
+else
+    for idx in range(len(element))
+        append element[idx]
+        '''
+
+
+def flatten_list(nested_list):
+    flattened = []
+
+    for element in nested_list:
+        if not isinstance(element, list):
+            flattened.append(element)
+        else:
+            flattened.extend(flatten_list(element))
+    return flattened
+
+
+# Examples:
+# print(flatten_list([1, [2, 3], [4, [5, 6]]]) == [1, 2, 3, 4, 5, 6])
+# print(flatten_list([1, 2, 3]) == [1, 2, 3])
+# print(flatten_list([]) == [])
+# print(flatten_list([[[1, 2, 3]]]) == [1, 2, 3])
+
+def sort_key(string):
+    return (len(set(string)), string)
+
+def sort_by_distinct_chars(strings):
+    return sorted(strings, key=sort_key)
+
+# Examples:
+print(sort_by_distinct_chars(["aaa", "abc", "ab", "defg", "cc"]) == ["aaa", "cc", "ab", "abc", "defg"])
+print(sort_by_distinct_chars(["apple", "banana", "cherry"]) == ["banana", "apple", "cherry"])
+print(sort_by_distinct_chars(["zzz", "aaa", "zzz"]) == ["aaa", "zzz", "zzz"])
