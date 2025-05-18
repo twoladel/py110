@@ -52,6 +52,21 @@ def count_substrings(str1, str2):
 
     return count
 
+#Second solution - while loop
+def count_substrings(str1, str2):
+    if str2 not in str1:
+        return 0
+
+    length = len(str2)
+    count = 0
+
+    while str2 in str1:
+        count += 1
+        idx = str1.find(str2)
+        str1 = str1[idx + length:]
+
+    return count
+
 
 print(count_substrings('babab', 'bab') == 1)
 print(count_substrings('babab', 'ba') == 2)
