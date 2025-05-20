@@ -31,16 +31,24 @@ while the list is not empty
 return the count
 '''
 
-def even_substrings(string):
-    digits = [int(digit) for digit in string]
+# def even_substrings(string):
+#     digits = [int(digit) for digit in string]
 
+#     count = 0
+
+#     while digits:
+#         if digits[-1] % 2 == 0:
+#             count += len(digits)
+#         digits.pop()
+
+#     return count
+
+def even_substrings(string):
     count = 0
 
-    while digits:
-        if digits[-1] % 2 == 0:
-            count += len(digits)
-        digits.pop()
-
+    for i in range(len(string) - 1, -1, -1):
+        if int(string[i]) % 2 == 0:
+            count += i + 1
     return count
 
 
