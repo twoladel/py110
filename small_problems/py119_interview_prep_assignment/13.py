@@ -7,7 +7,24 @@ characters. Neither string will be empty.'''
 
 '''
 P-
+input: two strings
+output: boolean, if all chars in 2nd string are in 1st string. Each char present,
+so if 'o' appears twice, there should be two o's in the 1st string. 
 
+
+
+D-
+convert str2 to list
+
+
+A-
+check if char from str1 in str2
+if so remove char from str2
+convert str2 to list to be able to remove each char as it is checked. 
+can mutate str2 while iterating str1 without running into problems. 
+
+If the list (str2) is falsy at the end of the iteration, you should return True. 
+So return not str2
 '''
 
 def unscramble(str1, str2):
@@ -17,7 +34,7 @@ def unscramble(str1, str2):
             idx = str2.index(char)
             str2.pop(idx)
 
-    return not bool(str2)
+    return not str2
             
 
 
