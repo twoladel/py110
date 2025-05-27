@@ -24,6 +24,12 @@ for num in list
 '''
 
 def what_is_different(numbers):
+    # numbers.sort()
+    # if numbers[0] == numbers[1]:
+    #     return numbers[-1]
+    # else:
+    #     return numbers[0]
+
     num_counts = {}
 
     for num in numbers:
